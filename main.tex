@@ -55,6 +55,42 @@ This primer is \textit{not} intended for investors who:
     \item Prefer the simplicity of a buy-and-hold portfolio
 \end{itemize}
 
+\chapter{Defining Volatility} \label{DefiningVolatility}
+This section will briefly define the meaning of "Realized Volatility" and "Implied Volatility".
+
+\section{Realized Volatility}\label{Defining-Realized}
+\subsection{Defining Realized Volatility}\label{Defining-Realized-Define}
+There are many methods of measuring volatility. Realized volatility is a measure of how much an asset moves over time. 
+
+\subsection{Method of Measuring Volatility}\label{Defining-Realized-Method}
+Most commonly, realized volatility is the standard deviation of the daily log returns of some asset over a pre-defined period. An equation to calculate realized volatility is below:
+\begin{equation} 
+V=\sqrt{\frac{1}{N}\sum_{t=0}^{N}{\ln({\frac{P_{t}}{P_{t-1}}})}}
+\end{equation}\label{Eq-Volatility}
+Where $N$ is the number of days, $P_t$ is the dividend-adjusted price on day $t$, and $P_{t-1}$ is the dividend-adjusted price on day $t-1$. Volatility is commonly annualized. The following equation includes the number of trading days in the year to annualize the realized volatility:
+\begin{equation} 
+V=\sqrt{\frac{252}{N}\sum_{t=0}^{N}{\ln({\frac{P_{t}}{P_{t-1}}})}}
+\end{equation}\label{Eq-VolatilityAnnualized}
+The realized volatility provides some insight into how much the stock moved around over the period of measurement. If it is assumed that the asset's returns are lognormally distributed, the measured volatility provides an estimate of the standard deviation of the distribution of the asset's returns.
+
+\section{Implied Volatility} \label{Define-IV}
+\subsection{Definition} \label{Define-IV-Define}
+Implied volatility generally refers to the volatility implied by some security/index of some other security/index. 
+
+\subsection{Implied Volatility of Options} \label{Define-IV-Options}
+The term is used most commonly by options traders. In the context of options, Implied Volatility is the volatility that, when plugged into the Black-Scholes model, yields the current market price of an option. In other words, the price of an option can be used to determine the expected volatility of the underlying asset over the period of the option using some model of pricing options (Not necessarily Black-Scholes).
+
+\subsection{Issues With Option-Implied Volatility} \label{Define-IV-Issues}
+Black-Scholes assumes that the performance of all assets are lognormally distributed. Empirically, this assumption has not been accurate. This incorrect assumption (along with other assumptions made by the Black-Scholes model) causes the implied volatility of options with the same expiration dates and different strikes to differ
+
+\subsection{The VIX}
+\label{Define-IV-VIX}
+The VIX attempts to calculate the Implied Volatility of the options of an asset without relying on an option pricing model. It does this by estimating the fair value of a variance swap using all of the options within one (or two) expiration dates. The methodology of the VIX calculation is explained further in Chapter \ref{CalcVix}.
+
+
+
+
+
 
 \chapter{Calculating the Volatility Index (VIX)} \label{CalcVix}
 
@@ -348,7 +384,7 @@ Note that this definition relies on the premise that the market is efficient and
 \section{Quantifying Risk Premium} \label{Futures-Quantify}
 Historical futures data can be analyzed to quantify the risk premium. While historical data may not be representative of future results, it may be valuable to review historical data as a basis to understand potential future risks. The fundamentals laid out previously in this section intends to explain why shorting volatility has a positive expected value. This section aims to provide a rough estimate of the expected value of shorting volatility futures. \\
 \\
-The following chart is a chart of the average VIX futures price as a function of the days to expiration. The details behind how the data was smoothed are provided in Appendix A. 
+The following chart is a chart of the average VIX futures price as a function of the days to expiration. The details behind how the data was smoothed are provided in Appendix \ref{AppendixA}. 
 \\
 \\
 \begin{figure}[H]
@@ -378,7 +414,25 @@ Contango describes the relationship between the spot and the futures when the fu
 \\
 The VIX futures are in contango a majority of the time. Using the equation from section \ref{Futures-VIXFuts-Premium}, the VIX is in contango whenever the expected VIX plus the risk premium is greater than the spot VIX. A majority of the time, the VIX is in contango because the expected VIX is generally close to or higher than the spot VIX.\\
 \\
+\\
+The term structure in the following figure shows the VIX term structure in contango. Notably, the term structure is shaped similarly to a chart of a square root function.\\
+\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{VIXFuturesContango.png}
+\caption{VIX Futures Term Structure In Contango} \label{Fig-AvgVIXDaysToExpiration}
+\end{figure}
+\noindent
+The term structure in the following figure shows the VIX term structure with an American presidential election 100 days out. The expected volatility from the election causes the VIX futures that include the election to be elevated relative to the others.\\
+\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{VIXFuturesContangoElection.png}
+\caption{VIX Futures Term Structure In Contango - Election} \label{Fig-VIXStructureContangoElection}
+\end{figure}
+\noindent
 /ES futures are in contango when the risk-free rate is greater than the expected dividend yield of the S\&P 500. As described in section \ref{Futures-Applications-Arb}, this is because the risk-free rate and the dividend yield work against one another when pricing S\&P 500 futures.
+
 
 \subsection{Parity} \label{Futures-ConBackPar-Par}
 Parity describes the relationship between the spot and the futures when the futures price is the same as (or very close to) the spot price. \\
@@ -392,6 +446,15 @@ Backwardation describes the relationship between the spot and the futures when t
 \\
 VIX futures are in backwardation when the expected VIX is less than the VIX spot by more than the risk premium demanded by VIX sellers. This tends to be the case after periods of high realized volatility. This is because a reversion to mean is expected soon after a period of realized volatility (sustained high volatility is not expected). Section \ref{SigOfVIX} touched on the idea that the VIX rarely spikes and when it does, it usually falls very quickly to lower levels.\\
 \\
+The figure below shows the VIX futures curve during a period of backwardation. The following figure was taken from vixcentral.com on 04/10/2025.
+\\
+\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{VIXFuturesBackwardation.png}
+\caption{VIX Futures Term Structure In Backwardation} \label{Fig-VIXFuturesBackwardation}
+\end{figure}
+\noindent
 /ES futures are in backwardation when the expected dividend yield is higher than the risk-free rate. This generally occurs when interest rates are near zero or negative.
 
 \section{Common Myth: Buy Backwardation, Sell Contango} \label{Futures-Myth}
@@ -588,7 +651,7 @@ The following chart shows the performance of SVXY from 2011 to 2025.\\
 \noindent
 This chart includes the Volmageddon event that occurred in 2018. Note that the multiplier of SVXY also changed in 2018 from -1x to -0.5x in response to Volmageddon. The SVXY Simulated line on the chart simulates SVXY as if the multiplier remained -1x. The provider of the SHORTVOL index data used to simulate SVXY also performed some adjustments during Volmaggedon to reduce its effect. The simulated SVXY takes into account the expense ratio of SVXY but does not account for the transaction costs the fund incurs when it trades.\\
 \\
-The following chart is the simulated returns of SVXY with a -0.5x multiplier from 2005 to 2025. The simulation crudely attempted to include the transaction costs incurred by the ETF the methodology is described in the appendix in Appendix B.\\
+The following chart is the simulated returns of SVXY with a -0.5x multiplier from 2005 to 2025. The simulation crudely attempted to include the transaction costs incurred by the ETF the methodology is described in Appendix B.\\
 \\
 \begin{figure}[H]
 \centering
@@ -749,16 +812,12 @@ Many of the strategies described in this primer require active management and ma
 In the US, the taxation of short-volatility strategies may be worse than long-term buy-and-hold strategies. VIX futures and options are Section 1256 contracts. At the end of each tax year, gains and losses on VIX contracts are "realized" (marked to market) at 40\% STCG and 60\% LTCG regardless of the holding period and regardless of whether the gain was realized.\\
 \\
 This forced realization of gains (and taxation) reduces the compounding of the gains from short volatility. For this reason, it may be advantageous to add short volatility exposure to a tax-advantaged account rather than a taxable account.
-
-
-
-
-
-
-\chapter{Appendix A} \label{AppendixA}
-\section{Quantifying Risk Premium - Smoothing} \label{AppendixA-Smooting}
+\appendix
+\chapter{Quantifying Risk Premium - Smoothing} \label{AppendixA}
 To create the chart in section \ref{Futures-Quantify}, data containing dates, futures prices, and their expiration dates was collected. From this data, a set of days to expiration and futures price from all of the futures was derived. \\
 \\
-Due to the contract schedule of VIX futures, there were discontinuities in the data. To smooth the discontinuities, the data was convolved with $\{\frac{1}{5}(u(t-2.5)-u(t+2.5))$ where $u(t)$ is the unit step function. Once smoothed, the resulting data was graphed as a function of days to expiration. 
-\backmatter
+Due to the contract schedule of VIX futures, there were discontinuities in the data. To smooth the discontinuities, the data was convolved with $\{\frac{1}{5}(u(t-2.5)-u(t+2.5))$ where $u(t)$ is the unit step function. Once smoothed, the resulting data was graphed as a function of days to expiration.
+
+\chapter{Appendix B} \label{AppendixB}
+
 \end{document}
